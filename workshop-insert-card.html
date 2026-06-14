@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Service Pro – Workshop Insert Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a2e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 32px;
+    padding: 40px 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .label {
+    color: #aaa;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  .cards-row {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card-side-label {
+    color: #666;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  /* ────────────────────────────────────────────────────────
+     INSERT CARD — DL size: 99mm × 210mm
+     Screen preview: 374px × 793px
+  ──────────────────────────────────────────────────────── */
+  .card {
+    width: 374px;
+    height: 793px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid #333;
+  }
+
+  /* ── FRONT ── */
+  .card-front {
+    background: #0D1B2A;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top orange band */
+  .card-top-band {
+    background: #F97316;
+    padding: 22px 28px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-top-band::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0; right: 0;
+    height: 60px;
+    background: #F97316;
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
+    z-index: 1;
+  }
+
+  .top-badge {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 2px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .card-headline {
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.2;
+    max-width: 280px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-headline .ai-word {
+    background: #fff;
+    color: #F97316;
+    padding: 0 6px;
+    border-radius: 2px;
+    display: inline;
+  }
+
+  /* Body content */
+  .card-body {
+    flex: 1;
+    padding: 48px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .card-sub {
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+  }
+
+  /* 3 benefit pills */
+  .benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.04);
+    border-left: 3px solid #F97316;
+    border-radius: 2px;
+  }
+
+  .benefit-icon {
+    width: 32px;
+    height: 32px;
+    background: #F97316;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .benefit-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .benefit-text {
+    flex: 1;
+  }
+
+  .benefit-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .benefit-desc {
+    font-size: 11px;
+    color: #64748b;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  /* Discount coupon block */
+  .coupon {
+    background: linear-gradient(135deg, #06B6D4 0%, #0891b2 100%);
+    border-radius: 6px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .coupon::before {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+
+  .coupon-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 6px;
+  }
+
+  .coupon-offer {
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .coupon-off {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 12px;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .coupon-code-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 8px 12px;
+    border: 1.5px dashed rgba(255,255,255,0.4);
+  }
+
+  .coupon-code-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  .coupon-code {
+    font-size: 18px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 3px;
+  }
+
+  .coupon-expiry {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 10px;
+  }
+
+  /* Bottom footer */
+  .card-footer {
+    padding: 16px 28px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .footer-brand {
+    font-size: 11px;
+    font-weight: 700;
+    color: #F97316;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .footer-url {
+    font-size: 10px;
+    color: #475569;
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── BACK ── */
+  .card-back {
+    background: #F97316;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Large decorative circles */
+  .card-back::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+  }
+
+  .card-back::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: -60px;
+    width: 200px;
+    height: 200px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 50%;
+  }
+
+  .back-logo {
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .back-logo svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .back-brand {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .back-brand-name {
+    font-size: 22px;
+    font-weight: 900;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .back-tagline {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+    font-family: 'Open Sans', sans-serif;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* Toggle illustration */
+  .back-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50px;
+    padding: 12px 24px;
+  }
+
+  .toggle-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .toggle-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .toggle-dot.on { background: #0D1B2A; }
+  .toggle-dot.off { background: #fff; }
+
+  .toggle-state-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .toggle-divider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  .back-promise {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+    max-width: 260px;
+    font-style: italic;
+  }
+
+  .back-promise strong {
+    display: block;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 900;
+    margin-bottom: 4px;
+    color: #0D1B2A;
+  }
+
+  .back-website {
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-bottom: 2px solid rgba(255,255,255,0.5);
+    padding-bottom: 4px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .back-qr {
+    width: 90px;
+    height: 90px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .back-qr-placeholder {
+    font-size: 9px;
+    color: #aaa;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    padding: 8px;
+    line-height: 1.5;
+  }
+
+  /* Grid QR mock */
+  .qr-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 10px);
+    grid-template-rows: repeat(7, 10px);
+    gap: 1px;
+    padding: 6px;
+  }
+
+  .qr-cell {
+    border-radius: 1px;
+  }
+
+  .qr-cell.b { background: #0D1B2A; }
+  .qr-cell.w { background: transparent; }
+
+  .print-note {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 12px 20px;
+    color: #666;
+    font-size: 12px;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .print-note strong { color: #999; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .card { border: 1px solid #ccc; }
+    .print-note, .label, .card-side-label { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<p class="label">Workshop Insert Card — DL Size 99mm × 210mm</p>
+
+<div class="cards-row">
+
+  <!-- FRONT -->
+  <div class="card-wrap">
+    <div class="card-side-label">Front</div>
+    <div class="card card-front">
+
+      <!-- Top coloured band -->
+      <div class="card-top-band">
+        <div class="top-badge">Exclusive Workshop Invite</div>
+        <h1 class="card-headline">
+          Set Up <span class="ai-word">Claude AI</span><br>
+          for Your Local<br>
+          Service Business
+        </h1>
+      </div>
+
+      <!-- Body -->
+      <div class="card-body">
+
+        <p class="card-sub">
+          10x your output with planning,<br>
+          insights &amp; AI automations built<br>
+          for tradies &amp; service businesses.
+        </p>
+
+        <div class="benefits">
+          <div class="benefit">
+            <div class="benefit-icon">
+              <!-- Lightning bolt -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <div class="benefit-text">
+              <div class="benefit-title">Planning &amp; Strategy</div>
+              <div class="benefit-desc">Let Claude handle your quotes, schedules &amp; business plans.</div>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit-icon">
+              <!-- Bar chart -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <div class="benefit-text">
+              <div class="benefit-title">Business Insights</div>
+              <div class="benefit-desc">Spot trends, track growth &amp; make smarter decisions faster.</div>
+            </div>
+          </div>
+
+          <div class="benefit">
+            <div class="benefit-icon">
+              <!-- Cog/settings -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+            </div>
+            <div class="benefit-text">
+              <div class="benefit-title">AI Automations</div>
+              <div class="benefit-desc">Save hours every week with automated follow-ups &amp; workflows.</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Discount coupon -->
+        <div class="coupon">
+          <div class="coupon-eyebrow">Onboarding Exclusive</div>
+          <div class="coupon-offer">$50 OFF</div>
+          <div class="coupon-off">Online Workshop — Use code at checkout</div>
+          <div class="coupon-code-wrap">
+            <div>
+              <div class="coupon-code-label">Promo Code</div>
+              <div class="coupon-code">COLDONE</div>
+            </div>
+          </div>
+          <div class="coupon-expiry">Valid 90 days from receipt · One use per business</div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="card-footer">
+        <div class="footer-brand">Local Service Pro</div>
+        <div class="footer-url">localservicepro.com.au/workshop</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BACK -->
+  <div class="card-wrap">
+    <div class="card-side-label">Back</div>
+    <div class="card card-back">
+
+      <!-- Logo -->
+      <div class="back-logo">
+        <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="21" cy="21" r="19" stroke="#F97316" stroke-width="3"/>
+          <path d="M21 8v13" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
+          <path d="M13.5 12.5A13 13 0 1 0 28.5 12.5" stroke="#F97316" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+
+      <!-- Brand name -->
+      <div class="back-brand">
+        <div class="back-brand-name">Local Service Pro</div>
+        <div class="back-tagline">Switch on. Work smart. Switch off.</div>
+      </div>
+
+      <!-- Toggle on/off visual -->
+      <div class="back-toggle-row">
+        <div class="toggle-state">
+          <div class="toggle-dot on"></div>
+          <div class="toggle-state-label">Work</div>
+        </div>
+        <div class="toggle-divider"></div>
+        <div class="toggle-state">
+          <div class="toggle-dot off"></div>
+          <div class="toggle-state-label">Cold One</div>
+        </div>
+      </div>
+
+      <!-- Promise quote -->
+      <div class="back-promise">
+        <strong>"Switch off when<br>you've earned it."</strong>
+        That's the whole point of running<br>a smarter business.
+      </div>
+
+      <!-- QR Code placeholder -->
+      <div class="back-qr">
+        <!-- Simplified QR pattern mock -->
+        <svg width="78" height="78" viewBox="0 0 78 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Top-left finder -->
+          <rect x="4" y="4" width="22" height="22" rx="2" fill="#0D1B2A"/>
+          <rect x="8" y="8" width="14" height="14" rx="1" fill="#F97316"/>
+          <rect x="11" y="11" width="8" height="8" fill="#0D1B2A"/>
+          <!-- Top-right finder -->
+          <rect x="52" y="4" width="22" height="22" rx="2" fill="#0D1B2A"/>
+          <rect x="56" y="8" width="14" height="14" rx="1" fill="#F97316"/>
+          <rect x="59" y="11" width="8" height="8" fill="#0D1B2A"/>
+          <!-- Bottom-left finder -->
+          <rect x="4" y="52" width="22" height="22" rx="2" fill="#0D1B2A"/>
+          <rect x="8" y="56" width="14" height="14" rx="1" fill="#F97316"/>
+          <rect x="11" y="59" width="8" height="8" fill="#0D1B2A"/>
+          <!-- Data dots (decorative) -->
+          <rect x="30" y="4" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="38" y="4" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="46" y="4" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="30" y="10" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="38" y="10" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="30" y="18" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="46" y="18" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="4" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="10" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="20" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="30" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="38" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="46" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="54" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="62" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="70" y="30" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="4" y="38" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="20" y="38" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="38" y="38" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="54" y="38" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="70" y="38" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="4" y="46" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="10" y="46" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="30" y="46" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="46" y="46" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="62" y="46" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="30" y="54" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="38" y="54" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="54" y="54" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="70" y="54" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="30" y="62" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="46" y="62" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="62" y="62" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="38" y="70" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="54" y="70" width="4" height="4" fill="#0D1B2A"/>
+          <rect x="70" y="70" width="4" height="4" fill="#0D1B2A"/>
+        </svg>
+      </div>
+
+      <!-- Website -->
+      <div class="back-website">localservicepro.com.au/workshop</div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="print-note">
+  <strong>Insert Card Print Spec:</strong> DL 99mm × 210mm · CMYK · 3mm bleed · 350gsm board recommended · Spot UV on logo optional
+  &nbsp;|&nbsp; Replace QR code placeholder with real URL before sending to print.
+</div>
+
+</body>
+</html>
